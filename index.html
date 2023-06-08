@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Website</title>
+  <style>
+.close-buttonmap {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #333;
+      font-size: 28px;
+      cursor: pointer;
+    }
+.close-buttonmap:hover {
+color: #fff;
+}
+.popupmap {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background rgba(0, 0, 0, 0.9);
+backdrop-filter:blur(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.3s;
+    }
+
+    .popupmap.showmap {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .popupmap img {
+      max-width: 35%;
+      max-height: 35%;
+positionfixed;
+margin-left:35%;
+top:15%;
+border-radius:20px;
+border:2px solid white;
+    }
+.imgchat {
+position:fixed;
+top:35%;
+right:33%;
+}
+.popupmap img:hover {
+box-shadow:0 0 20px rgba(0, 0, 0.7);
+}
+.chat-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+box-shadow:0 0 20px rgba(0, 0, 0, 0.6);
+display:none;
+z-index:1000;
+    }
+
+    .chat-container h2 {
+      text-align: center;
+    }
+
+    .chat-container .chat-log {
+      height: 150px;
+      overflow-y: scroll;
+      background-color: #f5f5f5;
+      padding: 10px;
+    }
+
+    .chat-container .user-message {
+      margin-bottom: 10px;
+      text-align: right;
+    }
+
+    .chat-container .bot-message {
+      margin-bottom: 10px;
+    }
+
+ .chat-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+border-radius:20px;
+    }
+  .chat-container input[type="text"]:hover {
+box-shadow:0 0 16px rgba(0, 0, 0, 0.5);
+
+}
+    .chat-container .show-answer-btn {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .chat-container .answer {
+      display: none;
+      margin-top: 10px;
+    }
+.show-answer-btn button {
+background-color:#333;
+color:white;
+border-radius:20px;
+height:20px;
+}
+.show-answer-btn button:hover {
+ background-color:#fff;
+color:#333;
+border-radius:20px;
+height:20px;
+box-shadow:0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #337ab7;
+            border-radius: 50%;
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            z-index:1000;
+           }
+.chat-icon:hover {
+background-color: #002147;
+box-shadow: 0 0 15px rgba(0, 0,  0.8);
+}
+        .close-sign {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            color: #999;
+            cursor: pointer;
+        }
+ .close-sign:hover {
+color:#333;
+}
+    #input-box {
+      width: 80%;
+      padding: 5px;
+    }
+
+    #submit-button {
+      margin-top: 10px;
+    }
+ .chat-container h2{
+text-align:center;
+}
+body{
+background-color:#002147;
+}
+
+
+.message-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: transparent;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center ;
+      box-shadow 0 0 10px rgba(0, 0, 0, 0.3);
+font-size:25px;
+font-weight:bold;
+color:#36454f;
+backdrop-filter:blur(5px);
+z-index;
+transition:;
+    }
+
+
+    .close-button {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+color:#aaa;
+}
+
+
+ .close-button:hover{
+ color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.popup {
+display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 5%;;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color 0 0 20px rgba(0, 0,  0.5);
+    border-radius:20px;
+    box-shadow:0 0 30px rgba(0, 0, 0.8);
+backdrop-filter blur(10px);
+background-color: rgba(0, 0, 0, 0.6);
+}
+
+.popup-content {
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    border-radius:20px;
+box-shadow:0 0 10px rgba(0, 0, 0.5);
+backdrop-filterblur(1px);
+
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+  input[type="text"],
+    input[type="password"],
+    input[type="email"],
+  input[type="number"]     
+{
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      border: none;
+      border-bottom: 1px solid black;
+      outline: none;
+      background-color:transparent;
+color:black;
+     
+    }
+
+    input[type="submit"] {
+      width: 30%;
+      height:30px;
+      padding: 5px 20px;
+      margin-top: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+      background-color: #333;
+      border: 1px solid white;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+     input[type="submit"]:hover {
+      background-color: black;
+      width:30%;
+height:30px;
+    }
+
+.signin
+{
+margin-left:80px;
+font-size:26px;
+color:black;
+text-shadow0 0 5px rgba(0, 0, 0.5);
+}
+.field ,.secfield,.reset
+{
+text-align:center;
+}
+.reset{
+display:flex;
+float:right;
+color:white;
+}
+.reset:hover{
+color:black;
+border-radius20px;
+}
+.user,.logo
+{
+display:flex;
+}
+    body {
+     
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+background-color:white;
+      background-imageurl("jungle.jpeg");
+   background-size:100% 100%;
+      padding: 10px;
+     height:80px;
+      position: fixed;
+      top: 0%;
+      left: 0;
+      right: 0;
+      z-index: 999;
+     box-shadow:0 0 20px rgba(0, 0, 0.6);
+borderblack;
+    }
+
+/* Style for the navigation menu */
+        ul.nav-menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+background-color:transparent;;
+position:fixed;
+top:8%;
+left:30%;
+
+        }
+
+        
+        ul.nav-menu li {
+            display :inline-block;
+ right: 10%;;
+margin-right:10px;
+            transition: transform 0.3s;
+            position: relative;
+margin-right 5px; /* Adjust the margin as needed */
+ background-color:transparent;
+box-shadow0 0 16px rgba(0, 0, 0.8);
+border-radius:10px;
+colorwhite;
+        }
+        
+        ul.nav-menu li a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+font-size:19px;
+
+        }
+        ul.nav-menu li a:hover {
+color:#333;
+font-size:20px;
+background-color:white;
+box-shadow:0 0 20px rgba(0, 0, 0.8);
+border-radius:10px;
+padding15px;
+margin10px;
+}
+        
+        ul.nav-menu li ul.dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+margin-left:10px;
+            background-color: none;
+            padding: 0;
+        }
+        
+        ul.nav-menu li:hover ul.dropdown {
+            display: block;
+
+        }
+        
+        ul.nav-menu li ul.dropdown li {
+            display: block;
+
+        }
+        
+        ul.nav-menu li ul.dropdown li a {
+            padding: 10px;
+            color: #fff;
+margin-top:10px;
+font-size:17px;
+background-color:transparent;
+width:80px;
+        }
+ul.nav-menu li ul.dropdown li a:hover {
+color:black;
+background-color:white;
+box-shadow:0 0 20px rgba(0, 0, 0.8);
+border-radius:10px;
+font-size:18px;
+width:80px;
+}
+
+
+
+    
+    main {
+     padding-top:8px;
+     padding:0;
+      text-align: center;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 30px;
+      position:absolute;
+right:0;
+left:0;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        position: static;
+      }
+
+      nav ul {
+        flex-direction column;
+      }
+    }
+
+
+ .dropdown {
+      position: fixed;
+      display: block;
+      
+      top:4%;
+     left:2%;
+      border-radius:20px;
+    }
+    @media ( max-width: 768px){
+    .dropdown{
+position:static;
+margin-top:15%;
+}
+}
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+     border-radius:20px;
+height:580px;;
+ background-color: white;
+
+    }
+
+    
+    .dropdown-content a {
+      color: #002147;
+background-colorblue;
+      font-weight:bold;
+      font-size:15px;
+      padding :0px 30px;
+      text-decoration: none;
+      display: block;
+      height:50px;
+      
+    }
+    
+    .dropdownhover .dropdown-content {
+      display: block;
+      color:black;
+border-radius:20px;
+    }
+
+    .hamburger {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      margin: 6px 0;
+      transition: transform 0.3s;
+    }
+
+    .hamburger.opened {
+      transform: rotate(155deg);
+    }
+
+    .hamburger.opened:before {
+      transform: rotate(-90deg) translate(-6px, 0px);
+    }
+
+    .hamburger.opened:after {
+      transform: rotate(90deg) translate(-6px, 0px);
+    }
+
+.container {
+      position: relative;
+      width: 100%;
+      height: 600px;;
+      overflow: hidden;
+    }
+
+    .image {
+      position: absolute;
+      top: 0;
+      left: -200px; /* Initial position outside the container */
+      animation: moveImage 5s linear infinite;
+      height: 100%;
+    }
+
+    @keyframes moveImage {
+      0% {
+        left: -200px;
+      }
+      100% {
+        left: 100%; /* Moves the image to the right end of the container */
+      }
+    }
+button{
+color:black;
+height:35px;
+border-radius:20px;
+background-color:transparent;
+border-color:transparent;
+}
+button:hover{
+colorwhite;
+background-color:transparent;
+height:35px;
+border-radius:20px;
+border-color:transparent;
+}
+input[type="button"]{
+color:#fff;
+background-color:#333;
+height:25px;
+font-size:15px;
+border-color:transparent;
+}
+input[type="button"]:hover{
+color:white;
+background-color:black;
+height:25px;
+font-size:15px;
+}
+.rating {
+      displayflex;
+      flex-direction: row-reverse;
+      justify-content center;
+    }
+    .rating input {
+      display: none;
+    }
+    .rating label {
+      color: #ddd;
+      font-size: 30px;
+      padding: 5px;
+      cursor: pointer;
+    }
+    .rating label:before {
+      content: '\2605';
+    }
+    .rating input:checked ~ label {
+      color: #ffca08;
+    }
+    .rating:not(:checked) label:hover,
+    .rating:not(:checked) label:hover ~ label {
+      color: #ffca08;
+    }
+    .rating input:checked + label:hover,
+    .rating input:checked ~ label:hover,
+    .rating label:hover ~ input:checked ~ label,
+    .rating input:checked ~ label:hover ~ label {
+      color: #ffca08;
+    }
+fieldset{
+width:32%;
+box-shadow: 0 0 30px rgba(0, 0, 0, 8);
+margin-left64%;;
+border-radius:20px;
+border-color:transparent;
+backdrop-filterblur(10px);
+background-color:white;
+}
+input[type="email"],
+input[type="text"]{
+border:none;
+border-bottom:1px solid black;
+}
+a:hover{
+color:green;
+font-size:17px;
+}
+.name{
+color:black;
+}
+.name:hover{
+color:purple;
+font-size17px;
+}
+.buttonhover {
+            padding 10px 20px
+            background-color: green;
+            color: black;
+            border: none;
+            cursor: pointer;
+width100px;
+z-index:999;
+}
+::placeholder{
+color:black;
+font-weightbold;
+}
+.search-box input[type="text"]hover{
+border-radius:20px;
+border-color:none;
+font-size:15px;
+}
+.userhover
+position:fixed;
+top14%;
+left0;
+z-index999;
+displayinline-block;
+}
+
+.userhover img{
+displayblock;
+}
+.userhover .overlay{
+background-color:0 0 20 rgba( 0, 0, 0.5);
+color:black;
+opacity:0;
+transition:opacity 0.7s ease-in-out;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+position:fixed;
+top:2%;
+right:7%;
+font-weight:bold;
+z-index:999;
+}
+.userhover:hover .overlay{
+opacity:1;
+}
+#popupFieldset {
+  display: none;
+  position: fixed;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0.15);
+  z-index:1000;
+height:500px;
+}
+@media (max-width: 767px){
+#popupFieldset {
+width:300px;
+height:600px;
+}
+}
+.btn
+{
+font-size:15px;
+position:absolute;
+bottom:0;
+}
+.btn:hover{
+color:purple;
+}
+.field{
+height10px;
+}
+#popupfield{
+display: none;
+  position: fixed;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0.15);
+  z-index:999;
+height:460px;
+filterblur(2px);
+}
+.fil{
+display:flex;
+justify-content:space-between;
+
+}
+#popupButton1{
+font-size:17px;
+border-color:black;
+width:200px;
+}
+#popupButton1:hover{
+background-color:lightgrey;
+color:white;
+}
+.sub{
+color:red;
+}
+a{
+font-size:15px;
+font-weight:bold;
+}
+.sigunbtn:hover{
+background-color:green;
+}
+#field2{
+filter:blur(2px);
+width:100%;
+height:100%;
+}
+.sec2filed {
+display:flex;
+position:relative;
+left14%;
+justify-content:space-between;
+}
+@media (max-width: 767px) {
+      h1 {
+        font-size: 15px;
+      }
+    }
+}
+h1{
+font-size:29px;
+}
+@media (max-width: 767px) {
+nav ul  {
+position:fixed;
+width5px;
+font-size:14px;
+}
+}
+@media (max-width: 767px){
+.search-box{
+width1px;
+position:fixed;
+left:25%;
+width:1px;
+display:flex;
+}
+.search-box input[type="text"]{
+width:150px;
+
+}
+}
+ .search-container {
+            position: fixed;
+right:4%;
+top:20%;
+            display: inline-block;
+display: flex;
+        }
+        
+        .search-input  {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 35%;
+z-index999;
+width:350px;
+backdrop-filterblur(2px);
+box-shadow0 0 20px rgba(0, 0, 0.8);
+
+        }
+        
+        .search-icon {
+cursor:pointer;
+} 
+       .search-button {
+            cursor: pointer;
+background-color:transparent;
+color:white;
+position:fixed;
+right:26%;
+top:21%;
+
+        }
+ .search-button:hover {
+box-shadow0 0 20px rgba(0, 0, 0.8);
+color:black;
+height30px;
+width30px;
+border-bottom:2px solid black;
+}       
+        .search-icon i {
+            display: block;
+            width: 30px;
+            height: 30px;
+            background: url('magni.png') no-repeat center center;
+            background-size: contain;
+        }
+.t input[type="text"]{
+background-color:white;
+border-radius:20px;
+bottom-border:2px solid black;
+width:400px;
+border:2px solid black;
+}
+.t input[type="text"]:hover {
+box-shadow:0 0 16px rgba(0, 0, 0.8);
+border-top2px solid white;
+background-colorwhite;
+}
+.search-icon i:hover {
+position:fixed;
+height:35px;
+width:35px;
+}
+.cr:hover {
+height:30px;
+}
+.popup2 {
+    display: none;
+    position: fixed;
+    z-index:999;
+    left: 0;
+    top: 5%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+border-radius:20px;
+    box-shadow:0 0 30px rgba(0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.popup-content2 {
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+height:200px;
+padding:20px;
+margin40px;
+text-align:center;
+border-radius:20px;
+}
+
+.close2 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close2:hover,
+.close2:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.but input[type="button"] {
+margin-top:50px;
+margin-right100px;
+}
+#popupFieldset input[type="submit"]{
+color:white;
+font-size:14px;
+border-radius:20px;
+background-color:black;
+height:30px;
+}
+#popupFieldset input[type="submit"]:hover{
+width:200px;
+transition 3s ease;
+color:black;
+background-color:white;
+box-shadow:0 0 20px rgba(0, 0, 0.8);
+}
+#popupFieldset input[type="button"]{
+color:white;
+font-size:14px;
+border-radius:20px;
+background-color:black;
+height:30px;
+}
+#popupFieldset input[type="button"]:hover{
+width200px;
+transition 3s ease;
+color:black;
+background-color:white;
+box-shadow:0 0 20px rgba(0, 0, 0.8);
+border-color:black;
+}
+.companylogohover {
+positionrelative;
+display:inline-block;
+}
+
+.companylogohover:hover .company-logo {
+opacity:1;
+}
+
+.companylogohover .company-logo {
+background-color:0 0 20 rgba( 0, 0, 0.5);
+color:black;
+opacity:0;
+transition:opacity 0.7s ease-in-out;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+position:fixed;
+top:4%;
+left:18%;
+font-weight:bold;
+z-index:999;
+}
+.firstfield {
+position:relative;
+top:40px;
+background-color:transparent;
+padding:40px;
+padding-top20px;
+border-radius:20px;
+width:90%;
+left:1%;
+box-shadow:0 0 20px rgba(0, 0, 0.6);
+z-index10;
+backdrop-filter:blur(5px);
+color:white;
+}
+.marquee {
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+.hotelssection1{
+position:relative;
+top:27px;
+}
+
+.chat-iconhover {
+positionrelative;
+display:inline-block;
+}
+.chat-iconhover:hover .company-bot {
+opacity:1;
+}
+
+.chat-iconhover .company-bot {
+background-color:0 0 20 rgba( 0, 0, 0.5);
+color:black;
+opacity:0;
+transition:opacity 0.7s ease-in-out;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+position:fixed;
+bottom:10%;
+right:2%;
+font-weight:bold;
+z-index:1000;
+}
+.inputbox {
+position:fixed;
+bottom:11%;
+}
+.submitbuttoncompany {
+position:fixed;
+bottom:14%;
+right:10%;
+}
+.chat-container {
+            position: fixed;
+            bottom: 10%;
+            right: 5%;;
+            width: 350px;
+            height: 400px;
+            background-color: transparent;
+            backdrop-filter:blur(4px);
+            border-radius: 10px;
+            padding: 10px;
+            padding-bottom:20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index:1000;
+            overflow-y: scroll;
+        }
+.chat-container input[type="text"] {
+border:white;
+background-color:#ededed;
+border-radius:20px;
+border-bottom1px solid black;
+height:30px;
+top-border:1px solid white;
+position:relative;
+top:10px;
+}
+.chat-container input[type="text"]:hover {
+background-color:#d4d4d4;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+.chat-container button {
+background-color:#36454f;
+color:white;
+height:26px;
+}
+.chat-container button:hover {
+color:black;
+position:relative;
+bottom8px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+height:26px;
+
+}
+.chat-log a {
+color:#36454f;
+}
+.chat-log a:hover {
+font-size:15px;
+color:green;
+}
+.mappop {
+font-size:16px;
+background-color:#333;
+width:100px;
+color:white;
+}
+</style>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+<div class="chat-iconhover">
+
+<div class="chat-icon" onclick="toggleChat()">Chat</div>
+<div class="chat-container" id="chat-container">
+<div class="imgchat"><img src="logo2.jpeg" style="width:60px; height:50px; border-radius:50px;"></div>
+<span class="close-sign" onclick="toggleChat()">&times;</span><br><br>
+    <h2>Chat Me</h2>
+ <div class="chat-log" id="chatLog"> <div class="answer" id="answer">-</div></div>   
+    <div class="user-message">
+      <input type="text" class="textinput" id="userInput" placeholder="Type your question..." autofocus />
+    </div>
+    <div class="show-answer-btn">
+      <button onclick="showAnswer()">submit</button>
+    </div>
+    
+  </div>
+<div class="company-bot">Sewak info</div></div>
+             
+    </div>
+    
+  </div>
+    </div>
+  <header>
+<div class="dropdown">
+    <button class="dropbtn" onclick="toggleDropdown()">
+      <div class="hamburger"></div>
+      <div class="hamburger"></div>
+      <div class="hamburger"></div>
+    </button>
+    <div class="dropdown-content" id="dropdownContent">
+      <img src="home.png" style="width:30px;height:30px;margin-top:15px;position:fixed;margin-left:5px;"><a href="Website.html" class="home" style="margin-top:23px;">Home</a>
+      <a href="terms and condition.html">t&c</a>
+      <a href="sewak.html">About us</a>
+<a href="registration form.html">registration</a>
+       <a href="membershipform.html">Membership</a>
+        <a href="newlogin.html">sign up</a>
+<br><br><br><br><br><br><br><br><br><br>
+      <p class="name" style="font-weight:bold;padding:0px 20px;">@SEWAK</p>
+    </div>
+  </div>
+  <ul class="nav-menu">
+        <li><a href="#section1">Home</a></li>
+        <li>
+            <a href="#section2">Hotels</a>
+            <ul class="dropdown">
+                <li><a href="#">manali</a></li>
+                <li><a href="#">kullu</a></li>
+                <li><a href="#">bhuntar</a></li>
+            </ul>
+        </li>
+        
+<li>
+            <a href="#section3">About</a>
+            <ul class="dropdown">
+                <li><a href="#">Sewak</a></li>
+                <li><a href="https://googlemap.com">Location</a></li>
+                <li><a href="#">information</a></li>
+            </ul>
+        </li>
+        <li><a href="#section4">Contact</a></li>
+<li>
+            <a href="#section5">Medicals</a>
+            <ul class="dropdown">
+                <li><a href="#section3">Hospitals</a></li>
+                <li><a href="#section4">Medical shops</a></li>
+                <li><a href="#section1">Animal hospital</a></li>
+            </ul>
+        </li>
+<li>
+            <a href="#section5">Machinery</a>
+            <ul class="dropdown">
+                <li><a href="#section3">Hospitals</a></li>
+                <li><a href="#section4">Medical shops</a></li>
+                <li><a href="#section1">Animal hospital</a></li>
+            </ul>
+        </li>
+
+    </ul>   
+
+<p class="text" style="color:white;position:fixed;margin-left:90%;top:8%;"></p>
+
+ <div class="search-container">
+        <div class="search-icon" onclick="toggleSearch()">
+            <i></i>
+        </div>
+        <div class="search-input">
+<div class="t">
+            <input type="text"  id="searchInput" placeholder="Search......"></div>
+           <div class="cr"> <button type="button"  class="search-button" onclick="PerformSearch()"><img src="magni.png" class"cr" style="width:20px;height:20px;"></button></div>
+        </div>
+    </div>
+    
+  </header>
+<div class="userhover">
+<button id="popupButton"><img src="userlogin.png" style="height:40px;width:40px;position:fixed;top:6%;right:4%;z-index:999;"></button>
+
+<fieldset id="popupFieldset">
+  <legend style="font-weight:bold;"><h3>User Login</h3></legend>
+  <p><div class="form">
+<div class="logo">
+<legend><img src="logo.jpeg" style="width:70px;height:70px;border-radius:50px;"></legend>
+<h2 class="signin">login</h2></div>
+<br><br>
+        <input type="email" id="email" placeholder="Email@gmail.com">
+        <input type="password" id="password" placeholder="Password"><br>
+        <label style="color:black;"><input type="checkbox" id="showpassword" >show password</label><br><br>
+<div class="field">
+        <input type="submit" onclick="signIn()" style"color:white;background-color:black;font-size:15px;height:25px; value="sign in">
+</div>
+<div class="secfield">
+<h3 style="colorwhite;color:black;">new user</h3>
+<div class="signupbtn">
+<span><a href="newlogin.html" style="color:white;"><input type="button" style"color:white;background-color:black;font-size:15px;height:25px; value="Sign up"></a><span></div>
+</div>
+</div>
+<br>
+<div class="reset">
+<a href="reset.html" style="color:black;font-size:17px;">Forget Password</a>
+</div></p>
+  <button id="closeButton" class="btn" style="border-radius:20px;background-color:transparent;position:fixed;top:0;right:0;font-size:25px;">&times;</button>
+</fieldset>
+<div class="overlay">
+<h4>login</h4>
+</div>
+</div>
+<div class="companylogohover">
+<a href="sewak.html"><img src="logo2.jpeg" style="position:fixed;top:1%;margin-left:10%;width:70px;height:60px;z-index:999;border-radius:50px;"></a>
+<div class="company-logo">Sewak Global Solution</div>
+</div>
+<div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2 style="text-align:center;">Registration</h2>
+                <h4>if you are instersted in our website and want more latest information regarding our tours register your details </h4>
+                <a href="registration form.html"><input type="button" class="sub" value="register" ></a>
+        </div>
+    </div>
+<div id="popup2" class="popup2">
+        <div class="popup-content2">
+            <span class="close2" onclick="closePopup2()">&times;</span>
+            <h2>Membership guide</h2>
+            <form>
+               become our member to enjoy the benefit of out membership using different discounts on different things
+                <div class="but">
+                <a href="membershipform.html"><input type="button"  value="membership"></a></div>
+            </form>
+        </div>
+    </div>
+  <main>
+<div class="firstfield"><div class="marquee">
+        <span>this flow is used for the advertising that is going to be picked from the customers.</span>
+    </div></div>
+    <section id="section1">
+     <br><br><br>
+<h1 class="hotelssection1" style="color:white;">hotels</h1>
+      <div class="fil"><fieldset><h3>Shopping centers</3>
+      <p>hello this section is used for the conent of kullu shops located only in kullu<br>
+<div class="container">
+    <img class="image" src="sewak.jpeg" alt="Moving Image"></div><img src="empanelment.png" style="width:100%;height:100%;">
+<img src="nature.jpeg" style="height:400px;width:100%;"></p></fieldset>
+<fieldset>
+<h3>Shopping centers</3>
+      <p>hello this section is used for the conent of kullu shops located only in kullu<br>
+<div class="container">
+    <img class="image" src="sewak.jpeg" alt="Moving Image"></div><img src="empanelment.png" style="width:100%;height:100%;">
+<img src="nature.jpeg" style="height:400px;width:100%;"></p>
+</fieldset></div>
+    </section>
+    <section id="section2">
+<br><br><br><br><br>
+      <h3>Hotels</h3>
+      <p>this section is used for sewak global solution.<br><div class="sec2filed"><fieldset><img src="recruit.png" style="width:100%;height:100%;"></fieldset>
+<fieldset><img src="nature2.jpeg" style="width:100%;height:100%;"> </fieldset></div>
+<div class="container">
+    <img class="image" src="elephant.jpeg" alt="Moving Image" style="height:600px;width:100%;"></div></p>
+    </section>
+
+    <section id="section3">
+<br><br><br><br><br><br>
+      <h3>Food and Restaurant</h3>
+      <p>Food and Restaurant <br><img src="membership.png"style="width:100%;height:100%;">
+<br><img src="nature2.jpeg" style="width:100%;height:100%;"> <br><img src="nature.jpeg" style="height:400px;width:100%;"></p>
+    </section>
+
+    <section id="section4">
+<br><br><br><br><br><br
+      <h3>Contact us</h3>
+      <p>sewak global solution.<br><img src="scene.jpeg" style="width:100%;height:100%;">
+<br><img src="nature2.jpeg" style="width:100%;height:100%;"> <br><img src="nature.jpeg" style="height:400px;;width:100%;"></p>
+    </section>
+
+    <section id="section5">
+<br><br><br> <br><br><br
+      <h3>About</h3>
+      <p>sewak global solution <br><img src="nature2.jpeg" style="width:100%;height:100%;">
+<br><img src="empanelment.png" style="width:100%;height:100%;"><img src="nature.jpeg" style="height:400px;width:100%;"></p>
+    </section>
+  </main>
+<button id="popupButton1">feedback</button>
+<fieldset id="popupfield">
+  <legend><h2 style="text-align:center;">Feedback Form</h2></legend>
+  <form action="" method="post" name="sanjay-sheet" id="myform" onsubmit="clearForm()">
+    <div>
+      <label for="name"> Name</label>
+      <input type="text" id="name" name="name" placeholder="Username" required>
+    </div>
+    <div><br>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Email@gmail.com" required>
+    </div>
+    <div>
+<br>
+      <label for="feedback" style="text-align:center;">Feedback</label>
+      <br><textarea id="feedback" style="width:300px;height:70px;" name="feedback" required></textarea>
+    </div>
+<label>
+      <input type="radio" name="serviceRating" value="bad">
+&#x1f614
+    </label><br>
+    
+    <label>
+      <input type="radio" name="serviceRating" value="good">
+      &#x1f600
+    </label><br>
+    
+    <label>
+      <input type="radio" name="serviceRating" value="excellent">
+      &#x1f601
+    </label><br>
+    <div>
+      
+    </div>
+<div class="sub">
+ <input type="submit" style="position:fixed;bottom:2%;;" value="submit" name="submit"></div></form>
+<button id="closeButton1" class="btn" style="border-radius:20px;background-color:transparent;position:fixed;top:0;right:0;font-size:25px;">&times;</button>
+</fieldset>
+<br><br>
+<button onclick="showPopupmap()" class="mappop">Maps</button>
+  <div class="popupmap" id="popupContainermap">
+ <span class="close-buttonmap" onclick="hidePopupmap()">&times;</span>
+    <div class="imgpopback"><a href="https:\\www.googlemap.com"><img src="map.jpeg" alt="Image" ></a></div>
+  </div>
+
+  
+<br><br>
+  <footer>
+    <p>@sanjay bodh My Website. All rights reserved by Sanjay Bodh.</p>
+    <p>conect with me by</p>
+<a href="https://www.instagram.com" style="color:white;bottom-border:transparent;"><p>Instagram</p></a>
+  </footer>
+ <script>
+    function showPopupmap() {
+      var popup = document.getElementById('popupContainermap');
+      popup.classList.add('showmap');
+    }
+  function hidePopupmap() {
+      var popup = document.getElementById('popupContainermap');
+      popup.classList.remove('showmap');
+    }
+  </script>
+<script>
+    function openGoogleMaps() {
+      var mapsLink = "https://www.google.com/maps/search/?api=1&query=Kullu, Himachal Pradesh";
+      
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          
+          mapsLink = "https://www.google.com/maps/dir/?api=1&destination=Kullu, Himachal Pradesh&destination_place_id=<PLACE_ID>&travelmode=driving&dir_action=navigate&origin=" + latitude + "," + longitude;
+        });
+      }
+      
+      var link = document.getElementById("googleMapsLink");
+      link.href = mapsLink;
+    }
+    
+    openGoogleMaps();
+  </script>
+ 
+<script>
+    var menuOpen = false;
+
+    function toggleDropdown() {
+      var dropdownContent = document.getElementById("dropdownContent");
+      var hamburger = document.getElementsByClassName("hamburger");
+
+      if (menuOpen) {
+        dropdownContent.style.display = "none";
+        for (var i = 0; i < hamburger.length; i++) {
+          hamburger[i].classList.remove("opened");
+        }
+        menuOpen = false;
+      } else {
+        dropdownContent.style.display = "block";
+        for (var i = 0; i < hamburger.length; i++) {
+          hamburger[i].classList.add("opened");
+        }
+        menuOpen = true;
+      }
+    }
+  </script>
+ <script>
+        function PerformSearch() {
+            var query = document.getElementById("searchInput").value.toLowerCase();
+searchInput.value = ''; 
+            if (query.includes("medical shops")) {
+                window.location.href = "#section4";
+            } else if (query.includes("Hotels")) {
+                window.location.href = "#section2";
+           } else if (query.includes("restaurants")) {
+                window.location.href = "#section3";
+           } else if (query.includes("rest rooms")) {
+                window.location.href = "#section1";
+           } else if (query.includes("hotels near me")) {
+                window.location.href = "#section1"; 
+    } else if (query.includes("hotels in manali")) {
+         window.location.href = "#section4"; 
+     } else if (query.includes("hotels in kullu")) {
+         window.location.href = "#section2";  
+           } else if (query.includes("rest rooms near me")) {
+                window.location.href = "#section5";
+           } else if (query.includes("rest rooms in kullu")) {
+                window.location.href = "#section4";
+            } else {
+                alert("No results found for your search ");
+            }
+        }
+    </script>
+<script>
+var firebaseApp = firebase.initializeApp({ apiKey: "AIzaSyAuYft3xyKlTlYjng4eDIgqjQ6d-zuBVuQ",
+  authDomain: "login-page-a69bf.firebaseapp.com",
+  projectId: "login-page-a69bf",
+  storageBucket: "login-page-a69bf.appspot.com",
+  messagingSenderId: "679735259732",
+  appId: "1:679735259732:web:57dd373430985ffc21b3c1",
+  measurementId: "G-34NLH2943Z" });
+   var db = firebaseApp.firestore();
+   var auth = firebaseApp.auth();
+</script> 
+<script> 
+ const popupButton1 = document.getElementById('popupButton1');
+const popupfield = document.getElementById('popupfield');
+const closeButton1 = document.getElementById('closeButton1');
+
+popupButton1.addEventListener('click', function() {
+  popupfield.style.display = 'block';
+});
+
+closeButton1.addEventListener('click', function() {
+  popupfield.style.display = 'none';
+});
+
+ </script>
+  
+<script> 
+ const popupButton = document.getElementById('popupButton');
+const popupFieldset = document.getElementById('popupFieldset');
+const closeButton = document.getElementById('closeButton');
+
+popupButton.addEventListener('click', function() {
+  popupFieldset.style.display = 'block';
+});
+
+closeButton.addEventListener('click', function() {
+  popupFieldset.style.display = 'none';
+});
+
+ </script>
+<script>
+function signIn(){
+var email = document.getElementById("email").value;
+var password = document.getElementById("password").value;
+var emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+if (!emailPattern.test(email)){
+alert("please enter an valid email address");
+return;
+}
+firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((result) => {
+     
+    window.location.href="personal.html";
+    
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage;
+    if(errorCode === "auth/email-already-in-use"){
+    errorMessage = "this email is already in use by another account.";
+}
+else if(errorCode === "auth/missing-password"){
+    errorMessage = "enter your password";
+}
+else if(errorCode === "auth/weak-password"){
+    errorMessage = "password should be of atleast 6 characters";
+}
+else if(errorCode === "auth/network-request-failed"){
+    errorMessage = "hello! your network connection is low or unreachable please check the connection";
+}
+else
+{
+   errorMessage = error.message;
+}
+    
+   
+alert(errorMessage);
+
+    
+  });
+}
+</script>
+<script>
+const passwordInput = document.getElementById("password");
+const showPasswordCheckbox = document.getElementById("showpassword");
+
+showPasswordCheckbox.addEventListener("change", function(){
+if (showPasswordCheckbox.checked){
+   passwordInput.type = "text";
+}
+else{
+passwordInput.type = "password";
+}
+})
+</script> 
+<script>
+    function showPopup() {
+    var popup = document.getElementById("popup");
+    popup.style.display = "block";
+}
+
+function closePopup() {
+    var popup = document.getElementById("popup");
+    popup.style.display = "none";
+}
+
+setTimeout(showPopup, 20000); // Display the popup after 5 seconds (5000 milliseconds)
+
+    </script>
+<script>
+    setTimeout(function() {
+      var messageContainer = document.createElement('div');
+      messageContainer.classList.add('message-container');
+
+      var messageText = document.createTextNode('Welcome to Sewak Global Solution website we provide the best solution for your problems');
+      messageContainer.appendChild(messageText);
+
+      var closeButton = document.createElement('span');
+      closeButton.innerHTML = '&times;';
+      closeButton.classList.add('close-button');
+      closeButton.addEventListener('click', function() {
+        messageContainer.style.display = 'none';
+      });
+      messageContainer.appendChild(closeButton);
+
+      document.body.appendChild(messageContainer);
+    }, 5000); // 10000 milliseconds = 10 seconds
+  </script>
+<script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyt7j0rXcq359Roly2T4DlYw4XNXL4QtPDGXPHa9zBD8cJhOpelUFna4ABxRZLvphrt/exec'
+            const form = document.forms['sanjay-sheet']
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault()
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => alert("Thanks for your Feedback"))
+.catch(error => console.error('NetwrokError!', error.message))
+            })
+
+          </script>
+
+<script>
+function clearForm(){
+setTimeout(function() {
+document.getElementById("myform").reset();
+},2000);
+}
+</script>
+ <script>
+        var searchContainer = document.querySelector('.search-container');
+        var searchInput = document.getElementById("searchInput");
+        
+        function toggleSearch() {
+            var searchInputContainer = document.querySelector('.search-input');
+            searchInputContainer.style.display = (searchInputContainer.style.display === "none") ? "block" : "none";
+        }
+        
+        function performSearch() {
+            var searchTerm = searchInput.value;
+            // Perform search logic with the searchTerm
+            console.log("Search for: " + searchTerm);
+        }
+        
+        document.addEventListener("click", function(event) {
+            var isClickInside = searchContainer.contains(event.target);
+            
+            if (!isClickInside) {
+                var searchInputContainer = document.querySelector('.search-input');
+                searchInputContainer.style.display = "none";
+            }
+        });
+    </script>
+
+ 
+   <script>
+function showPopup() {
+    var popup = document.getElementById("popup2");
+    popup.style.display = "block";
+}
+
+function closePopup2() {
+    var popup = document.getElementById("popup2");
+    popup.style.display = "none";
+}
+
+setTimeout(showPopup, 40000); // Display the popup after 15 seconds (15000 milliseconds)
+
+</script>
+ <script>
+        function toggleChat() {
+            var chatContainer = document.getElementById("chat-container");
+            chatContainer.style.display = chatContainer.style.display === "none" ? "block" : "none"  ;
+
+
+  
+
+        }
+
+    </script>
+<script>
+function addMessage(message, sender) {
+      const chatLog = document.getElementById('chatLog');
+      const messageElement = document.createElement('div');
+      messageElement.className = sender + '-message';
+      messageElement.innerHTML = message; // Use innerHTML to render HTML tags
+      chatLog.appendChild(messageElement);
+      chatLog.scrollTop = chatLog.scrollHeight; // Scroll to the bottom of the chat log
+    }
+
+    function handleUserInput() {
+      const userInput = document.getElementById('userInput');
+      const message = userInput.value.trim();
+      userInput.value = '';
+
+      if (message !== '') {
+        addMessage(message, 'user');
+        const botResponse = getBotResponse(message);
+        addMessage(botResponse, 'bot');
+      }
+    }
+
+    function showAnswer() {
+      const userInput = document.getElementById('userInput');
+      const question = userInput.value.trim();
+      const answer = getBotResponse(question);
+      const answerElement = document.getElementById('answer');
+      answerElement.innerHTML = answer; 
+      answerElement.style.display = 'block';
+      userInput.value = ''; 
+    }
+
+
+    function getBotResponse(userQuestion) {
+      if (userQuestion.toLowerCase().includes('name')) {
+        return 'I am an AI language model developed by sanjay, known as chatbot.';
+      } else if (userQuestion.toLowerCase().includes('services')) {
+        return 'I can assist you with various tasks such as answering questions, providing information, and more.';
+      } else if (userQuestion.toLowerCase().includes('contact sewak')) {
+        return 'You can reach us at <a href="sewak.html"> support@sewak.com </a> or call our helpline at <a href="tel:8219345102">(+91)82193-45102</a>.';
+      } else if (userQuestion.toLowerCase().includes('offers')) {
+        return 'Yes, we have some exciting offers available. Please contact our sales team for more details and visit <a href="registration form.html">Registration form</a> on filling form u will get day to day discounts  .';
+      } else if (userQuestion.toLowerCase().includes('offer')) {
+        return 'Yes, we have some exciting offers available. Please contact our sales team for more details and visit <a href="registration form.html">Registration form</a> on filling form u will get day to day discounts  .';
+      } else if (userQuestion.toLowerCase().includes('created')) {
+        return 'i was created by a developer name mr sanjay bodh in january 2023  .';
+      }  else if (userQuestion.toLowerCase().includes('built')) {
+        return 'i was built by a developer name mr sanjay bodh in january 2023  .';
+      }  else if (userQuestion.toLowerCase().includes('hi')) {
+        return 'hi how are you sir  how can i assist you ';
+      }  else if (userQuestion.toLowerCase().includes('hey')) {
+        return 'hey how are you sir  how can i assist you ';
+      } else if (userQuestion.toLowerCase().includes('wassup')) {
+        return 'wassup how are you sir  how can i assist you but don\'t use wassup ';
+      }
+else if (userQuestion.toLowerCase().includes('hello')) {
+        return 'hello how are you sir  how can i assist you ';
+      } else if (userQuestion.toLowerCase().includes('how are you')) {
+        return 'I am doing well, thank you greetings from sanjay sir';
+      } else if (userQuestion.toLowerCase().includes('who are you')) {
+        return 'My name is Chat Bot. I am bot created by sanjay.how are you are you doing well ';
+      } else if (userQuestion.toLowerCase().includes('old')) {
+        return 'I am an AI, so I dont have an age.';
+      } else if (userQuestion.toLowerCase().includes('when were you created')) {
+        return 'I was created in january 2023 by a developer name Sanjay Bodh who is a great man.';
+      } else if (userQuestion.toLowerCase().includes('bye')) {
+        return 'bye!have a nice day sir and don\'t forget to post a feedback of my service provided to you thanku';
+      }  else if (userQuestion.toLowerCase().includes('login')) {
+        return 'on the main screen a login interface is provided click  and fill the form to check your personal form or visit <a href="signin.html">Sign in</a> to visit your personal page ';
+      }  else if (userQuestion.toLowerCase().includes('log in')) {
+        return 'on the main screen a login interface is provided click  and fill the form to check your personal form or visit <a href="signin.html">Sign in</a> to visit your personal page ';
+      } else if (userQuestion.toLowerCase().includes('sign in')) {
+        return 'on the main screen a login interface is provided click  and fill the form to check your personal form or visit <a href="signin.html">Sign in</a> to visit your personal page ';
+      }   else if (userQuestion.toLowerCase().includes('signin')) {
+        return 'on the main screen a login interface is provided click  and fill the form to check your personal form or visit <a href="signin.html">Sign in</a> to visit your personal page ';
+      }   else if (userQuestion.toLowerCase().includes('signup')) {
+        return 'go to menu click signup and fill the form or visit <a href="newlogin.html">sign up</a> for new user registration ';
+      } else if (userQuestion.toLowerCase().includes('sign up')) {
+        return 'go to menu click signup and fill the form or visit <a href="newlogin.html">sign up</a> for new user registration ';
+      }    else if (userQuestion.toLowerCase().includes('old ')) {
+        return 'I am an artificial intelligence and dont have an age like humans do.';
+      } else if (userQuestion.toLowerCase().includes('age')) {
+        return  'I am an artificial intelligence and dont have an age like humans do.';
+} else if (userQuestion.toLowerCase().includes('abilities')) {
+        return  'I can assist with a wide range of tasks, including answering questions, providing information, generating text, offering suggestions, and engaging in conversations.';
+} else if (userQuestion.toLowerCase().includes('weather')) {
+        return  'I dont have real-time data access, so I cannot provide current weather information. However, you can check the weather by using a weather website or application. or i can provide to jump by clicking <a href="https:\\www.accuweather.com/en/in/kullu/188521/weather-forecast/188521">weather@himachal</a>';
+} else if (userQuestion.toLowerCase().includes('topics')) {
+        return 'Yes, I can help with a variety of topics. Please provide more details about the specific topic or question you have.';
+} else if (userQuestion.toLowerCase().includes('password')) {
+        return 'The process for resetting a password depends on the specific platform or service you are using. Typically, you can find a "Forgot Password" or "Reset Password" option on the login page, which will guide you through the necessary steps to reset your password.';
+}else if (userQuestion.toLowerCase().includes('skills')) {
+        return  ' Improving a skill or ability depends on the specific skill youre referring to. I can provide tips, resources, or guidance for skill development in various areas. Let me know which skill youd like to improve, and I ll provide specific suggestions.';
+} else if (userQuestion.toLowerCase().includes('capital of himachal')) {
+        return  'The capital of himachal pradesh is shimla.';
+} else if (userQuestion.toLowerCase().includes('capital of india')) {
+        return  'The capital of India is new delhi.';
+} else if (userQuestion.toLowerCase().includes('contact sewak global solution')) {
+        return  ' To contact sewak global solution, you can visit <a href="sewak.html">contact us</a> to look for their contact information. we usually provide phone numbers, email addresses, or contact forms for inquiries.';
+} else if (userQuestion.toLowerCase().includes('contact')) {
+        return  ' To contact sewak global solution, you can visit contact us to look for their contact information. we usually provide phone numbers, email addresses, or contact forms for inquiries.';
+} else if (userQuestion.toLowerCase().includes('hours')) {
+        return  'I am an AI chatbot and available 24/7 to assist you. However, the hours of operation for businesses or organizations may vary. Its best to check their official website or contact them directly for their specific hours of operation.';
+} else if (userQuestion.toLowerCase().includes('hour')) {
+        return  'I am an AI chatbot and available 24/7 to assist you. However, the hours of operation for businesses or organizations may vary. Its best to check their official website or contact them directly for their specific hours of operation.';
+}   else if (userQuestion.toLowerCase().includes('discounts')) {
+        return ' As an AI chatbot, I dont have access to real-time discounts or promotions. Its recommended to check the official website or subscribe or register our Sewak form for updates on discounts and promotions.';
+} else if (userQuestion.toLowerCase().includes('discount')) {
+        return ' As an AI chatbot, I dont have access to real-time discounts or promotions. Its recommended to check the official website or subscribe or register our Sewak form for updates on discounts and promotions.';
+} else if (userQuestion.toLowerCase().includes('promotions')) {
+        return ' As an AI chatbot, I dont have access to real-time discounts or promotions. Its recommended to check the official website or subscribe or rigister our Sewak form  for updates on discounts and promotions.';
+}  else if (userQuestion.toLowerCase().includes('can i speak to human')) {
+        return 'I am an AI chatbot and here to assist you. If you need to speak to a human representative, please let me know the specific reason or query, and Ill guide you accordingly. but for now im  now restricted by sanjay. ';
+}  else if (userQuestion.toLowerCase().includes('reservation')) {
+        return ' To make a reservation, its best to directly contact the restaurant, hotel, or service provider you wish to make a reservation with. They can provide you with the necessary information and assist you in making the reservation.';
+ }  else if (userQuestion.toLowerCase().includes('hotels')) {
+        return ' to check or visit the nearest hotels in your area please check our hotels sections or click <a href="#section1">Hotels</a> in our Sewak global solution website, thanku .';
+}   else if (userQuestion.toLowerCase().includes('hotel')) {
+        return ' to check or visit the nearest hotels in your area please check our hotels sections or click <a href="#section1">Hotels</a> in our Sewak global solution website, thanku .';
+}   else if (userQuestion.toLowerCase().includes('medicals')) {
+        return ' to check or visit the nearest medicals in your area please check our medical sections in our Sewak global solution website, thanku .';
+}  else if (userQuestion.toLowerCase().includes('medical')) {
+        return ' to check or visit the nearest medicals in your area please check our medical sections in our Sewak global solution website, thanku .';
+}  else if (userQuestion.toLowerCase().includes('hospital')) {
+        return ' to check or visit the nearest hospitals in your area please check our hospital sections or visit <a href="#section3">Hospitals</a> in our Sewak global solution website, thanku .';
+}  else if (userQuestion.toLowerCase().includes('hospitals')) {
+        return ' to check or visit the nearest hospitals in your area please check our hospital sections or visit <a href="#section3">Hospitals</a> in our Sewak global solution website, thanku .';
+}   else if (userQuestion.toLowerCase().includes('located')) {
+        return 'we are located in <a href="https:\\googlemap.com">(kullu)ISBT</a>  himachal pradesh in ground floor but my main access is from my developer ';
+} else if (userQuestion.toLowerCase().includes('location')) {
+        return 'we are located in <a href="https:\\googlemap.com">(kullu)ISBT</a> himachal pradesh in ground floor but my main access is from my developer ';
+}  else if (userQuestion.toLowerCase().includes('best place')) {
+        return 'in our website click the nearest best place to reach in there we have provided some of the best place according to your mood ';
+}  else if (userQuestion.toLowerCase().includes('best places')) {
+        return 'in our website click the nearest best place to reach in there we have provided some of the best place according to your mood ';
+}  else if (userQuestion.toLowerCase().includes('best place to eat')) {
+        return 'in our website click <a href="#section4">the nearest best place to eat</a> in there we have provided some of the best place according to your mood ';
+} else if (userQuestion.toLowerCase().includes('best places to eat')) {
+        return 'in our website click <a href="#section4">the nearest best place to eat</a> in there we have provided some of the best place according to your mood ';
+} else if (userQuestion.toLowerCase().includes('best place for lunch')) {
+        return 'in our website click <a href="#section4">the nearest best place to eat</a> in there we have provided some of the best place according to your mood ';
+}  else if (userQuestion.toLowerCase().includes('best places for lunch')) {
+        return 'in our website click <a href="#section4">the nearest best place to eat</a> in there we have provided some of the best place according to your mood ';
+} else if (userQuestion.toLowerCase().includes('best place for breakfast')) {
+        return 'in our website click <a href="#section4">the nearest best place to eat</a> in there we have provided some of the best place according to your mood ';
+} else if (userQuestion.toLowerCase().includes('best places for breakfast')) {
+        return 'in our website click <a href="#section4">the nearest best place to eat</a> in there we have provided some of the best place according to your mood ';
+} else if (userQuestion.toLowerCase().includes('best place for dinner')) {
+        return 'in our website click <a href="#section4">the nearest best place to eat</a> in there we have provided some of the best place according to your mood ';
+}  else if (userQuestion.toLowerCase().includes('best places for dinner')) {
+        return 'in our website click <a href="#section4">the nearest best place to eat</a> in there we have provided some of the best place according to your mood ';
+}  else if (userQuestion.toLowerCase().includes('contact number')) {
+        return 'our contact number is <a href= "tel:8219345102"> >(+91)82193-45102</a>';
+} else if (userQuestion.toLowerCase().includes('contactnumber')) {
+        return 'our contact number is <a href= "tel:8219345102"> >(+91)82193-45102</a>';
+} else if (userQuestion.toLowerCase().includes('website')) {
+        return 'our website provide you with the best quality of services which is only provided by me or by our website';
+} else if (userQuestion.toLowerCase().includes('register')) {
+        return 'our website provide you with the best quality of services which include discounts,promotions and latest feeds register yourself for latest update using <a href="registration form.html">registration form</a>';
+} else if (userQuestion.toLowerCase().includes('registeration')) {
+        return 'our website provide you with the best quality of services which include discounts,promotions and latest feeds register yourself for latest update using <a href="registration form.html">registration form</a>';
+} else if (userQuestion.toLowerCase().includes('member')) {
+        return 'our company provide you the best among all including discounts, promotions just by becoming our member to apply for a membership in our company visit <a href="membershipform.html">membership form</a> for more details';
+} else if (userQuestion.toLowerCase().includes('membership')) {
+        return 'to take the membership card click the <a href="membershipform.html">membership form</a> which will navigate to our form where you will get the actuall meaning of membership';
+} else if (userQuestion.toLowerCase().includes('membership card')) {
+        return 'to take the membership card click the <a href="membershipform.html">membership form</a> which will navigate to our form where you will get the actuall meaning of membership';
+} else if (userQuestion.toLowerCase().includes('purpose')) {
+        return 'our purpose is to make the shopping more easy with a different way just by clicking it by which you\'ll get various duscounts on various products CLICK <a href="sewak.html">more about@sewak.com</a> for more info';
+} else if (userQuestion.toLowerCase().includes('goal')) {
+        return 'our goal is to make the shopping more easy with a different way just by clicking it by which you\'ll get various duscounts on various products CLICK <a href="sewak.html">more about@sewak.com</a> for more info';
+}
+       else 
+      {
+        return 'I\'m sorry, but I don\'t have an access to that question. because my developer have rescricted me for some questions';
+      }
+    }
+  </script> 
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
